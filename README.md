@@ -8,7 +8,7 @@ First clone the built plugin into your vault.
 
 ```sh
 npx degit \
-  epicmet/obsidian-nb-pluglin/dist \
+  epicmet/obsidian-nb-plugin/dist \
   <PATH_TO_YOUR_VAULT>/.obsidian/plugins/obsidian-nb-pluglin # Modify if needed
 ```
 
