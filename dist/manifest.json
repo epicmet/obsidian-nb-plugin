@@ -1,0 +1,10 @@
+{
+  "id": "obsidian-nb-plugin",
+  "name": "nb",
+  "version": "0.0.1",
+  "minAppVersion": "0.15.0",
+  "description": "An Obsidian wrapper for `nb` (https://github.com/xwmx/nb)",
+  "author": "Mahdi Aghaei <mahd.aghaei@gmail.com>",
+  "authorUrl": "https://github.com/epicmet",
+  "isDesktopOnly": false
+}

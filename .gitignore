@@ -1,0 +1,16 @@
+# IDEs
+.vscode 
+*.iml
+.idea
+
+# Node.js
+node_modules
+main.js
+!dist/main.js
+*.map
+
+# obsidian
+data.json
+
+# OS
+.DS_Store
