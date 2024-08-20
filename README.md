@@ -8,9 +8,13 @@ This is a [`nb`](https://github.com/xwmx/nb) wrapper for Obsidian.
 
 ## Installation
 
-Make sure you have `nb` up and running. (Refer to the [documentation](https://github.com/xwmx/nb) if needed).
+> [!IMPORTANT]
+>
+> Make sure you have `nb` up and running before attempting to enable this plugin.
 
-Then clone the built plugin into your vault.
+You need to put the content of the `dist` directory inside your vault's plugins directory.
+
+For example, using [`degit`](https://github.com/Rich-Harris/degit) it looks something like this:
 
 ```sh
 npx degit \
@@ -18,8 +22,19 @@ npx degit \
   <PATH_TO_YOUR_VAULT>/.obsidian/plugins/obsidian-nb-pluglin # Modify this line
 ```
 
-And then reload community plugins from within Obsidian and enable the plugin.
+After putting it in the right place, reload community plugins from within Obsidian and enable the plugin.
 
-### Why not Obsidian's community plugins section?
+> [!IMPORTANT]
+>
+> Since you are using `nb` and Obsidian together, you are essentially syncing the `.obsidian` directory which includes your vault's settings and plugins!
+>
+> I recommend adding such lines to the root `.gitignore` of the `nb` notebook
+>
+> ```
+> .obsidian/plugins/
+> .obsidian/workspace.json
+> ```
+
+### Why this plugins is not published to Obsidian's community plugins?
 
 It's not registered as a standard community plugin within Obsidian because it's intended for developer use only.
