@@ -1,6 +1,6 @@
 # Obsidian `nb` plugin
 
-> **Warning**
+> [!Warning]
 >
 > This plugin is in early stages, Backup you vault and make sure that you know EXACTLY what you're doing.
 
