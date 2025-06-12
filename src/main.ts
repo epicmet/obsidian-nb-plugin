@@ -9,6 +9,8 @@ import {
   Platform,
 } from "obsidian";
 
+import { hasFileSystemAdaptor } from "./utils";
+
 const exec = promisify(ncp.exec);
 
 interface PluginSettings {
@@ -27,6 +29,7 @@ export default class NBPlugin extends Plugin {
   settings: PluginSettings;
   statusBar: HTMLElement;
   intervalId: number | undefined;
+  vaultBasePath: string;
 
   // TODO: Avoid parallel sync
   private async isRunning(query: string) {
@@ -50,20 +53,25 @@ export default class NBPlugin extends Plugin {
   }
 
   private async sync() {
-    if (!Platform.isDesktop) {
+    if (!Platform.isDesktop || !hasFileSystemAdaptor(this.app.vault.adapter)) {
       return new Notice(
         "The mobile is not supported yet! Use this plugin on desktop only for now!",
       );
     }
 
+    this.vaultBasePath = this.app.vault.adapter.getBasePath();
+
     new Notice("Started syncing");
     this.statusBar.setText("Syncing...");
     // TODO: Timeout & Abort signal
-    const res = await exec(SYNC_CMD, {}).catch((err) => {
-      new Notice("Could not sync! Checkout the logs");
-      console.error(err);
-      return null;
-    });
+    const res = await exec(SYNC_CMD, { cwd: this.vaultBasePath }).catch(
+      (err) => {
+        new Notice("Could not sync! Checkout the logs");
+        this.statusBar.setText("Failed to sync! Check the logs");
+        console.error(err);
+        return null;
+      },
+    );
 
     if (res) {
       new Notice("Sync complete!");
@@ -78,7 +86,9 @@ export default class NBPlugin extends Plugin {
       this.intervalId = window.setInterval(() => {
         console.info("Running `nb sync` interval time!");
 
-        exec(["nb", "git", "status", "--porcelain"].join(" "))
+        exec(["nb", "git", "status", "--porcelain"].join(" "), {
+          cwd: this.vaultBasePath,
+        })
           .then((shouldSync) => {
             if (shouldSync.stdout.length !== 0) {
               this.sync().then(() => console.log("Sync interval done!"));
